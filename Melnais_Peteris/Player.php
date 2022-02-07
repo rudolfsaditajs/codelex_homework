@@ -24,18 +24,31 @@ public function hasPairedCards():bool{
 return false;
 }
 public function isWinner(){
-    if(count($this->cards) ==0){
+    if(count($this->cards) === 0){
         return true;
     }
     return false;
 }
-public function switchCards(){
+public function switchCards(Player $otherPlayer){
 
 
+
+        $randomCardIndex = array_rand($otherPlayer->cards);
+        if(isset($otherPlayer->cards[$randomCardIndex])){
+        $card = $otherPlayer->cards[$randomCardIndex];
+        unset($otherPlayer->cards[array_search($card,$otherPlayer->cards)]);
+        $this->cards[] = $card;
+        }
+
+
+/*
     while(count($this->cards)>1) {
 
         $randNr = rand(0, count($this->cards)-1);
-        if (isset($this->cards[$randNr])) {
+        if (!isset($this->cards[$randNr])) {
+            continue;
+        }
+        else{
             $a = $this->cards[$randNr];
             unset($this->cards[array_search($a, $this->cards)]);
 
@@ -48,14 +61,19 @@ public function switchCards(){
 
 
     }
+*/
 }
 
-public function disband(){
+public function disband()
+
+
+{
     $symbols =[];
     foreach ($this->cards as $card){
         $symbols[] = $card->getSymbol();
     }
     $uniqueCardsCount = array_count_values($symbols);
+
 
     foreach ($uniqueCardsCount as $symbol =>$count){
         if($count === 1) continue;
@@ -108,6 +126,8 @@ public function disband(){
 
 
 
+
     }
 }
+
 }

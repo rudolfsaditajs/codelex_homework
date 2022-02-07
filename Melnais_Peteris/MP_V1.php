@@ -39,6 +39,26 @@ foreach ($npc->getCards() as $card){
 echo PHP_EOL;
 
 while(true){
+
+
+
+    $player->switchCards($npc);
+    $npc->switchCards($player);
+
+    $player->disband();
+    echo "Player hand :".PHP_EOL;
+    foreach ($player->getCards() as $card){
+        echo "| ".$card->getDisplayValue()." |";
+    }
+    echo PHP_EOL;
+
+
+    $npc->disband();
+    echo "NPC hand :".PHP_EOL;
+    foreach ($npc->getCards() as $card){
+        echo "| ".$card->getDisplayValue()." |";
+    }
+    echo PHP_EOL;
     if($player->isWinner()){
         echo "player has won.".PHP_EOL;
         exit;
@@ -48,23 +68,10 @@ while(true){
         exit;
     }
 
-
-    $player->addCard($npc->switchCards());
-    $npc->addCard($player->switchCards());
-    $player->disband();
-    foreach ($player->getCards() as $card){
-        echo "| ".$card->getDisplayValue()." |";
-    }
-    echo PHP_EOL;
-
-    $npc->disband();
-    foreach ($npc->getCards() as $card){
-        echo "| ".$card->getDisplayValue()." |";
-    }
-    echo PHP_EOL;
-
-
     sleep(1);
+
+
+
 
 
 }
